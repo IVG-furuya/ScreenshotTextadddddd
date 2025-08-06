@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const pasteBtn = document.getElementById('paste-btn');
     const fileInput = document.getElementById('file-input');
     const clearAllBtn = document.getElementById('clear-all-btn');
-    const deleteSelectedBtn = document.getElementById('delete-selected-btn');
     const saveBtn = document.getElementById('save-btn');
     const textInputContainer = document.getElementById('text-input-container');
     const textInput = document.getElementById('text-input');
@@ -168,17 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 選択テキスト削除ボタン
-    deleteSelectedBtn.addEventListener('click', () => {
-        if (selectedTextElement) {
-            textElements = textElements.filter(el => el.id !== selectedTextElement.id);
-            selectedTextElement = null;
-            updateCanvas();
-        } else {
-            alert('削除するテキストを選択してください。');
-        }
-    });
-
     // 画像保存ボタン
     saveBtn.addEventListener('click', () => {
         if (!image) {
@@ -288,6 +276,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // マウスがキャンバスから出た時
     canvas.addEventListener('mouseleave', () => {
         isDragging = false;
+    });
+
+    // デリートキーでテキスト削除
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Delete' && selectedTextElement) {
+            textElements = textElements.filter(el => el.id !== selectedTextElement.id);
+            selectedTextElement = null;
+            updateCanvas();
+        }
     });
 });
 
